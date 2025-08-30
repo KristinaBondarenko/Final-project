@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.container{max-width:1160px;margin:0 auto;padding:0 16px}
+.btn{ @apply inline-flex items-center gap-2 rounded-2xl px-4 py-2 border border-gray-300 hover:bg-gray-50; }
+.btn-primary{ @apply inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-2 bg-red-600 text-white hover:bg-red-700; }
+.card{ @apply rounded-2xl border border-gray-200 bg-white; }
