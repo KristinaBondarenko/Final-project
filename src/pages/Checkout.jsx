@@ -2,6 +2,7 @@ import React from 'react'
 import useGalleryStore from '../store/useGalleryStore'
 import { createOrder } from '../services/orders'
 import { useNavigate } from 'react-router-dom'
+
 export default function Checkout(){
   const cart=useGalleryStore(s=>s.cart)
   const clear=useGalleryStore(s=>s.clearCart)

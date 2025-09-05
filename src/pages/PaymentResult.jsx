@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
+
 export default function PaymentResult(){
   const [p]=useSearchParams()
   const ok=p.get('status')==='success'

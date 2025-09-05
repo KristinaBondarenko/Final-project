@@ -1,4 +1,3 @@
-// script.js
 document.getElementById('login-button').onclick = function() {
     document.getElementById('login-modal').style.display = 'flex';
 };
