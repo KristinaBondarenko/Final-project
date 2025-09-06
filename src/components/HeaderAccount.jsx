@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import AuthModal from "./AuthModal"; // Импортируем модальное окно авторизации.
-import useGalleryStore from "../store/useGalleryStore"; // Импортируем хук для доступа к состоянию хранлища.
+import useAuthStore from "../store/useAuthStore";
 import { Link } from "react-router-dom"; // Импортируем Link для навигации.
 
 // Компонент UserIcon для отображения иконки пользователя.
@@ -16,21 +16,21 @@ function UserIcon(props) {
 export default function HeaderAccount() {
   // useState для отслеживания состояния модального окна
   const [open, setOpen] = useState(false);
-  const { user, logout, isAdmin } = useGalleryStore();
+  const { user, logout, isAdmin } = useAuthStore();
 
   return (
     <div className="flex items-center gap-3"> 
       {user ? ( // Если пользователь авторизован.
         <>
-          <span className="text-sm">Привет, {user.email}</span>
+          <span className="text-sm"></span>
           {isAdmin() && ( // Если пользователь администратор
-            <Link to="/admin" className="text-sm underline">Админка</Link> // Ссылка на админку
+            <Link to="/admin" className="text-sm underline">Админка</Link> // Ссылка на админку.
           )}
-          <button className="text-sm underline" onClick={() => logout()}>Выйти</button> 
+          <button className="px-4 py-2 rounded-md text-white bg-blue-500 hover:bg-blue-600 transition duration-300" onClick={() => logout()}>Выйти</button> 
         </>
       ) : ( // Если пользователь не авторизован
         <button
-          onClick={() => setOpen(true)} // Открытие модального окна авторизации
+          onClick={() => setOpen(true)} // Открытие модального окна авторизации.
           className="p-2 rounded-full hover:bg-gray-100" 
           aria-label="Аккаунт"
         >

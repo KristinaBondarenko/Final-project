@@ -1,23 +1,23 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getImage } from "../services/images";
-import useGalleryStore from "../store/useGalleryStore";
+import useGalleryStore from "../store/useGalleryStore"; // Импортируем useGalleryStore для доступа к состоянию корзины.
 
 export default function ArtDetail() {
-  const { id } = useParams();
+  const { id } = useParams(); // Получаем id изображения из параметров маршрута.
   const navigate = useNavigate();
-  const add = useGalleryStore((s) => s.addToCart);
+  const add = useGalleryStore((s) => s.addToCart); // Получаем функцию для добавления в корзину.
 
-  const [item, setItem] = React.useState(null);
+  const [item, setItem] = React.useState(null); // Состояние для хранения изображения.
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     getImage(id)
       .then((data) => {
-        setItem(data);
+        setItem(data); // Устанавливаем изображение.
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch(() => setLoading(false)); // Обрабатываем ошибку загрузки.
   }, [id]);
 
   if (loading) return <div className="container py-8">Загрузка…</div>;
@@ -37,7 +37,9 @@ export default function ArtDetail() {
           </div>
           <div className="mt-2 text-lg">{item.title}</div>
           <div className="text-sm text-gray-600 mt-1">{item.size}</div>
-          <div className="text-sm text-gray-600">Материалы: {item.materials}</div>
+          <div className="text-sm text-gray-600">
+            Материалы: {item.materials}
+          </div>
           <div className="text-sm text-gray-600">Год: {item.year}</div>
           <div className="mt-4 text-lg">
             Цена: {(item.price || 0).toLocaleString("ru-RU")} руб
@@ -62,5 +64,3 @@ export default function ArtDetail() {
     </div>
   );
 }
-
-

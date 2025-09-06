@@ -4,18 +4,20 @@ import { getAllImages } from "../services/images";
 import ArtCard from "../components/ArtCard";
 
 export default function ArtistDetail() {
-  const { name } = useParams(); // имя из URL
-  const [artworks, setArtworks] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const { name } = useParams(); // Получаем имя художника из URL-параметров.
+  const [artworks, setArtworks] = useState([]); // Состояние для хранения работ художника.
+  const [loading, setLoading] = useState(false); // Состояние для отслеживания загрузки.
 
   useEffect(() => {
-    let mounted = true;
+    let mounted = true; // Флаг для отслеживания монтирования компонента.
+
     (async () => {
       setLoading(true);
+
       try {
-        const all = await getAllImages();
+        const all = await getAllImages(); // Получаем все изображения.
         if (mounted) {
-          // фильтруем только по этому художнику
+          // Фильтруем изображения по текущему художнику.
           const filtered = all.filter(
             (img) => img.author === decodeURIComponent(name)
           );
@@ -27,6 +29,7 @@ export default function ArtistDetail() {
         if (mounted) setLoading(false);
       }
     })();
+
     return () => (mounted = false);
   }, [name]);
 
@@ -34,23 +37,23 @@ export default function ArtistDetail() {
 
   return (
     <div className="container py-8">
-      <Link to="/artists" className="text-blue-600 hover:underline mb-4 mt-6 inline-block">
+      <Link
+        to="/artists"
+        className="text-blue-600 hover:underline mb-4 mt-6 inline-block"
+      >
         ← Назад к художникам
       </Link>
-
-      <h1 className="text-3xl font-bold mb-6">{decodeURIComponent(name)}</h1>
-
+      <h1 className="text-3xl font-bold mb-6">{decodeURIComponent(name)}</h1> //
+      Отображаем имя художника
       {artworks.length === 0 ? (
-        <p className="text-gray-600">У этого художника пока нет работ.</p>
+        <p className="text-gray-600">У этого художника пока нет работ.</p> // Если работ нет, отбражаем сообщение
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {artworks.map((art) => (
-            <ArtCard key={art.id} item={art} />
+            <ArtCard key={art.id} item={art} /> // Отображаем карточки с работами.
           ))}
         </div>
       )}
     </div>
   );
 }
-
-

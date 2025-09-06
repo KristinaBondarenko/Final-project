@@ -1,17 +1,19 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllImages } from "../services/images";
+import { getAllImages } from "../services/images"; // Импортируем функцию для получения всех изображений.
 
 export default function Artists() {
-  const [images, setImages] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  const [images, setImages] = useState([]); // Состояние для хранения изображений.
+  const [loading, setLoading] = useState(false); // Состояние для отслеживания загрузки.
+  const [error, setError] = useState(null); // Состояние для хранения ошибки.
+  const navigate = useNavigate(); // Получаем функцию для навигации.
 
   useEffect(() => {
     let mounted = true;
+
     (async () => {
-      setLoading(true);
+      setLoading(true); // Состояние загрузки.
+
       try {
         const all = await getAllImages();
         if (mounted) setImages(all);
@@ -21,19 +23,21 @@ export default function Artists() {
         if (mounted) setLoading(false);
       }
     })();
+
     return () => (mounted = false);
   }, []);
 
-  // Сгруппировать по автору
+  // Сгруппировать по автору.
   const artists = useMemo(() => {
-    const map = new Map();
+    const map = new Map(); // Создаем карту для хранения изображений по авторам.
+
     for (const img of images) {
-      if (!img?.author) continue;
-      if (!map.has(img.author)) map.set(img.author, []);
+      if (!img?.author) continue; // Пропускаем изображения без автора
+      if (!map.has(img.author)) map.set(img.author, []); // Создаем массив для автора, если его нет.
       map.get(img.author).push(img);
     }
 
-    // Порядок художников
+    // Порядок художников.
     const preferredOrder = [
       "Проказова Анна",
       "Иванов Сергей",
@@ -44,12 +48,13 @@ export default function Artists() {
     ];
 
     const result = [];
+
     for (const name of preferredOrder) {
-      if (map.has(name)) result.push({ name, artworks: map.get(name) });
+      if (map.has(name)) result.push({ name, artworks: map.get(name) }); // Добавляем художников в предпочтительном порядке.
     }
-    // Добавить остальных (если появятся новые авторы)
+
     for (const [name, artworks] of map.entries()) {
-      if (!preferredOrder.includes(name)) result.push({ name, artworks });
+      if (!preferredOrder.includes(name)) result.push({ name, artworks }); // Добавляем остальных художников.
     }
     return result;
   }, [images]);
@@ -64,7 +69,9 @@ export default function Artists() {
         {artists.map((artist) => (
           <div
             key={artist.name}
-            onClick={() => navigate(`/artists/${encodeURIComponent(artist.name)}`)}
+            onClick={() =>
+              navigate(`/artists/${encodeURIComponent(artist.name)}`)
+            }
             className="cursor-pointer p-6 bg-white shadow rounded-lg hover:shadow-lg transition"
           >
             <h2 className="text-xl font-semibold mb-2">{artist.name}</h2>
