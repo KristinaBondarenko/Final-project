@@ -13,7 +13,7 @@ export default function AuthModal({ open, onClose }) {
     password: "",
     remember: false,
   });
-  // Форма для входа
+  // Форма для входа.
   const [regOpen, setRegOpen] = useState(false); // Флаг отображения формы регистрации.
   const [regForm, setRegForm] = useState({
     email: "",
