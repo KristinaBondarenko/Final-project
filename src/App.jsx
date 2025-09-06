@@ -6,6 +6,9 @@ import AdminPage from "./pages/AdminPage";
 import NewsList from "./pages/NewsList";
 import NewsDetail from "./pages/NewsDetail";
 import ArtistDetail from "./pages/ArtistDetail";
+import AdminLayout from "./components/AdminLayout";
+import ControlPanel from "./pages/Admin/ControlPanel";
+import Paintings from "./pages/Admin/Paintings";
 
 const Home = lazy(() => import("./pages/Home"));
 const Catalog = lazy(() => import("./pages/Catalog"));
@@ -47,6 +50,10 @@ export default function App() {
             <Route path="/artist/:id" element={<ArtistDetail />} />
             <Route path="/artists" element={<Artists />} />
             <Route path="/artists/:name" element={<ArtistDetail />} />
+            <Route path="/admin" element={<AdminLayout />}>
+            <Route path="Paintings" element={<Paintings />} />
+            <Route index element={<ControlPanel />} />
+            </Route>
           </Routes>
         </Suspense>
       </main>
