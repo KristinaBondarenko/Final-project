@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
-import useGalleryStore from "../store/useGalleryStore"; // Хранилище состояния приложения.
+import useAuthStore from "../store/useAuthStore";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
 
 export default function AuthModal({ open, onClose }) {
-  // Получаем методы аутентификации и регистрации из хранилища состояния.
-  const { login, register } = useGalleryStore();
+  const { login, register, loginWithGoogle, loginWithGithub } = useAuthStore();
 
   // Локальные состояния компонента.
   const [loginForm, setLoginForm] = useState({
@@ -34,7 +35,7 @@ export default function AuthModal({ open, onClose }) {
     }
   };
 
-  // Обработчик отправки формы регистрации
+  // Обработчик отправки формы регистрации.
   const handleRegister = async (e) => {
     e.preventDefault();
     setError("");
@@ -47,6 +48,26 @@ export default function AuthModal({ open, onClose }) {
       onClose(false);
     } catch (err) {
       setError(err.message || "Ошибка регистрации");
+    }
+  };
+
+  // Обработчик входа через Google.
+  const handleGoogleLogin = async () => {
+    try {
+      await loginWithGoogle();
+      onClose();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  // Обработчик входа через GitHub.
+  const handleGithubLogin = async () => {
+    try {
+      await loginWithGithub();
+      onClose();
+    } catch (err) {
+      alert(err.message);
     }
   };
 
@@ -121,6 +142,22 @@ export default function AuthModal({ open, onClose }) {
               </a>
             </div>
           </form>
+
+          {/* Соцсети */}
+          <div className="mt-4 space-y-2">
+            <button
+              onClick={handleGoogleLogin}
+              className="flex items-center justify-center gap-2 w-full border py-2 rounded-md"
+            >
+              <FcGoogle className="text-xl" /> Войти через Google
+            </button>
+            <button
+              onClick={handleGithubLogin}
+              className="flex items-center justify-center gap-2 w-full border py-2 rounded-md"
+            >
+              <FaGithub className="text-xl" /> Войти через GitHub
+            </button>
+          </div>
         </div>
 
         {/* Колонка "Зарегистрироваться" */}
