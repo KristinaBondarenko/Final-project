@@ -18,7 +18,7 @@ export default function Checkout(){
   }
   if(cart.length===0) return <div className='container py-8'>Корзина пуста</div>
   return (<div className='container py-8'>
-    <h1 className='text-2xl font-semibold mb-4'>Оформление заказа</h1>
+    <h1 className='text-2xl font-semibold mb-4 mt-10'>Оформление заказа</h1>
     <form onSubmit={submit} className='grid md:grid-cols-2 gap-4'>
       <input required placeholder='Имя' className='px-3 py-2 rounded-xl border' value={form.name} onChange={e=>setForm({...form,name:e.target.value})}/>
       <input required type='email' placeholder='Email' className='px-3 py-2 rounded-xl border' value={form.email} onChange={e=>setForm({...form,email:e.target.value})}/>

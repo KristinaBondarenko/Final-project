@@ -30,7 +30,7 @@ export default function Catalog() {
     });
   }, []);
 
-  // Фильтрация товаров
+  // Фильтрация товаров.
   const filteredItems = artworks.filter((item) => {
     const matchQuery = item.title
       ?.toLowerCase()
@@ -47,7 +47,7 @@ export default function Catalog() {
     );
   });
 
-  // Сортировка товаров
+  // Сортировка товаров.
   const sortedItems = [...filteredItems].sort((a, b) => {
     if (sortKey === "price") {
       return order === "asc" ? a.price - b.price : b.price - a.price;
@@ -60,7 +60,7 @@ export default function Catalog() {
     return 0;
   });
 
-  // Пагинация
+  // Пагинация.
   const totalPages = Math.ceil(sortedItems.length / itemsPerPage);
   const paginated = sortedItems.slice(
     (currentPage - 1) * itemsPerPage,
@@ -164,7 +164,7 @@ export default function Catalog() {
               <button
                 className="btn-primary mt-2"
                 onClick={(e) => {
-                  e.stopPropagation(); // не открывать превью
+                  e.stopPropagation(); // не открывть превью.
                   setBuyItem(item);
                 }}
               >
